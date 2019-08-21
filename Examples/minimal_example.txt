@@ -1,0 +1,168 @@
+{$CLEO .cs}
+0000: NOP
+
+0AB1: @wait_till_game_and_samp_commands_loaded 0
+0AB1: @register_commands_from_label 1 @cmd_store
+
+while true 
+wait 0 
+
+end
+
+:cmd_store
+hex
+">mycommand" 00 @my_1st_cmd     
+"*mycommand" 00 @my_2nd_cmd
+
+00 // this 00 must be just before end
+end
+
+
+
+:my_1st_cmd
+if 0AB1: @get_last_command_params 0 _returned_string 3@
+then
+    0AD1: show_formatted_text_highpriority "my_1st_cmd params = ~G~%s" time 2000 3@
+else 
+    0AD1: show_formatted_text_highpriority "my_1st_cmd didn't have any params" time 2000
+end
+0AB1: @cmd_ret 0
+
+:my_2nd_cmd
+if 0AB1: @get_last_command_params 0 _returned_string 3@
+then
+    0AD1: show_formatted_text_highpriority "my_2nd_cmd params = ~G~%s" time 2000 3@
+else 
+    0AD1: show_formatted_text_highpriority "my_2nd_cmd didn't have any params" time 2000
+end
+0AB1: @cmd_ret 0
+
+
+
+
+
+:register_commands_from_label
+0A9F: 31@ = current_thread_pointer
+31@ += 16
+0A8D: 31@ = read_memory 31@ size 4 virtual_protect 0        // this cleo base ptr
+//chatmsg "base ptr = 0x%X" -1 31@
+0062: 31@ -= 0@                                             // 31@ = cmd_store offset
+//chatmsg "cmd_store offset = 0x%X" -1 31@ 
+0A8D: 30@ = read_memory 0x8580DC size 4 virtual_protect 0   // 0x8580DC is an address where pointer to lstrlenA is stored
+
+28@ = 1
+while 28@ <> 0
+    wait 0
+    0AA7: call_function 30@ num_params 1 pop 0 string 31@ _returned_length 29@ // 29@ = lstrlenA(command_prefix);
+    
+    if 29@ == 0
+    then
+        0AB2: ret 0
+    end
+    0085: 28@ = 31@
+    005A: 28@ += 29@
+    28@ += 1
+    0A8D: 28@ = read_memory 28@ size 4 virtual_protect 0
+    0AB1: call_scm_func @register_command 2 str 31@ to_label 28@    
+    005A: 31@ += 29@
+    31@ += 5
+end
+
+0AD1: show_formatted_text_highpriority "~R~ERROR: ~W~cmd_store has wrong format, crash incoming" time 6000
+wait 6000
+0AB2: ret 0
+
+
+
+:get_last_command_params
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_GetLastCommandParams@0" library 31@
+    then
+        //0AD1: show_formatted_text_highpriority "_GetLastCommandParams@0 function was ~G~found ~W~:)" time 2000
+        0AA7: call_function 30@ num_params 0 pop 0 _params_string_pointer 29@        
+        0AA3: free_library 31@
+                
+        if 29@ <> 0
+        then
+            0485:  return_true  
+            0AB2: ret 1 29@
+        end
+    else
+        0AD1: show_formatted_text_highpriority "_GetLastCommandParams@0 function was ~R~not found ~W~:(" time 5000
+    end
+end
+059A:  return_false
+0AB2: ret 1 0
+
+
+:cmd_ret
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_CmdRet@0" library 31@
+    then
+        //0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~G~found ~W~:)" time 2000
+
+        0AA5: call 30@ num_params 0 pop 0
+    else
+        0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~R~not found ~W~:(" time 5000
+    end
+    0AA3: free_library 31@
+end
+0AB2: ret 0
+
+
+
+//GetLastCommandParams
+
+
+:register_command
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_RegisterCommand@12" library 31@
+    then
+        //0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~G~found ~W~:)" time 2000        
+        0A9F: 29@ = current_thread_pointer
+                
+        // void _stdcall RegisterCommand(char * str, DWORD label_address, CLEO_RunningScript * cleo_thread_pointer) 
+        0AA5: call 30@ num_params 3 pop 0 cleo_thread_pointer 29@ label_address 1@ str 0@
+    else
+        0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~R~not found ~W~:(" time 5000
+    end    
+    0AA3: free_library 31@
+end
+0AB2: ret 0
+
+:is_samp_commands_loaded
+if 0AA2: 31@ = load_library "samp_commands.asi" // IF and SET
+then            
+    0485:  return_true
+    0AA3: free_library 31@
+    0AB2: ret 0
+end
+0AD1: show_formatted_text_highpriority "samp_commands.asi isn't loaded" time 1000
+059A:  return_false
+0AB2: ret 0
+
+:wait_till_game_and_samp_commands_loaded
+repeat 
+wait 0
+until 0AB1: call_scm_func @is_samp_commands_loaded 0
+
+repeat
+wait 0
+0A8D: 31@ = readMem 0xA444A0 sz 4 vp 0
+until 31@ == 1
+0AB2: ret 0
+
+:key_pressed_wait_till_release
+if 0AB0:   key_pressed 0@    
+then
+    while 0AB0:   key_pressed 0@ 
+        wait 0
+    end
+    0485:  return_true
+    0AB2: ret 0
+end
+059A:  return_false
+0AB2: ret 0

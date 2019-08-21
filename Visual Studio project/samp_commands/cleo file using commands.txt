@@ -1,0 +1,142 @@
+{$CLEO .cs}
+0000: NOP
+
+/*REPEAT
+WAIT 1000
+0A8D: 0@ = readMem 0xA444A0 sz 4 vp 0
+UNTIL 0@ == 1*/
+
+
+31@ = 0
+repeat 
+wait 0
+until 0AB1: call_scm_func @is_samp_commands_loaded 0
+
+alloc 0@ 20
+format 0@ ">a"
+0AC6: 1@ = label @cmd offset    
+
+0AB1: call_scm_func @register_command 2 str 0@ to_label 1@
+
+wait 10000
+
+chatmsg "start" -1
+while true 
+wait 100 
+
+ // 16 resets counter
+
+    if 0AB0:   key_pressed 48  // 00D6:   02
+    then
+    wait 1000
+        for 31@ = 0 to 300
+        wait 100
+            chatmsg "%d" -1 31@  // 0AF8:    21
+            
+            if 0AB0:   key_pressed 48
+            then
+                chatmsg "STOPPED" -1
+                break       
+            end
+        end
+    end
+end
+
+
+:cmd
+chatmsg "command worked" -1
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_CmdRet@0" library 31@
+    then
+        0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~G~found ~W~:)" time 2000
+
+        0AA5: call 30@ num_params 0 pop 0
+        chatmsg "CmdRet didn't work" -1
+        
+        0AA3: free_library 31@
+        
+    else
+        0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~R~not found ~W~:(" time 5000
+    end
+    
+    0AA3: free_library 31@
+end
+//0AB1: call_scm_func @cmd_ret 0  (commented out fearing it's scm function causing the problem)
+
+
+:get_last_command_params
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_GetLastCommandParams@0" library 31@
+    then
+        0AD1: show_formatted_text_highpriority "_GetLastCommandParams@0 function was ~G~found ~W~:)" time 2000
+
+        0AA7: call_function 30@ num_params 0 pop 0 _params_string_pointer 29@
+        
+        0AA3: free_library 31@
+        
+        0485:  return_true  
+        0AB2: ret 1 29@
+    else
+        0AD1: show_formatted_text_highpriority "_GetLastCommandParams@0 function was ~R~not found ~W~:(" time 5000
+    end
+    
+    059A:  return_false
+    0AA3: free_library 31@
+end
+0AB2: ret 1 0
+
+
+:cmd_ret
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_CmdRet@0" library 31@
+    then
+        0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~G~found ~W~:)" time 2000
+
+        0AA5: call 30@ num_params 0 pop 0
+        0AA3: free_library 31@
+        0AB2: ret 0
+    else
+        0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~R~not found ~W~:(" time 5000
+    end
+    
+    0AA3: free_library 31@
+end
+0AB2: ret 0
+
+
+
+//GetLastCommandParams
+
+
+:register_command
+if 0AA2: 31@ = load_library "samp_commands.asi"
+then
+    if 0AA4: 30@ = get_proc_address "_RegisterCommand@12" library 31@
+    then
+        0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~G~found ~W~:)" time 2000
+        
+        0A9F: 29@ = current_thread_pointer
+        
+        // void _stdcall RegisterCommand(char * str, DWORD label_address, CLEO_RunningScript * cleo_thread_pointer) 
+        0AA5: call 30@ num_params 3 pop 0 cleo_thread_pointer 29@ label_address 1@ str 0@
+    else
+        0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~R~not found ~W~:(" time 5000
+    end
+    
+    0AA3: free_library 31@
+end
+0AB2: ret 0
+
+:is_samp_commands_loaded
+if 0AA2: 31@ = load_library "samp_commands.asi" // IF and SET
+then            
+    0485:  return_true
+    0AA3: free_library 31@
+    0AB2: ret 0
+end
+0AD1: show_formatted_text_highpriority "samp_commands.asi isn't loaded" time 1000
+059A:  return_false
+0AB2: ret 0
