@@ -1,6 +1,6 @@
 # Prerequisites
-[Cleo library 4.1.1.30](https://cleo.li/cleo4/CLEO4.1_setup.exe) (Won't work with *4.3*)  
-[Samp 0.3.7 R1](http://files.sa-mp.com/sa-mp-0.3.7-install.exe) (Won't work with *R2/R3/DL*)  
+[Cleo library 4.1.1.30](https://cleo.li/cleo4/CLEO4.1_setup.exe) (Won't work with **4.3**)  
+[Samp 0.3.7 R1](http://files.sa-mp.com/sa-mp-0.3.7-install.exe) (Won't work with **R2/R3/DL**)  
 Some experience with using Cleo in general.
 
 # Installation
@@ -58,9 +58,10 @@ In the current state it doesn't allow to register commands with the default forw
 User is responsible for keeping track of command names to avoid registering the same command twice.  
 
 # Credits 
-Thanks to 0x688 for [Do your own SA:MP command's tutorial](http://ugbase.eu/index.php?threads/do-your-own-sa-mp-commands.18694/), it's very seful.
+Thanks to 0x688 for [Do your own SA:MP command's tutorial](http://ugbase.eu/index.php?threads/do-your-own-sa-mp-commands.18694/), it's very seful.  
 
 # Additional info
+[Virus Total scan of samp_commands.asi](https://www.virustotal.com/gui/file/cf2f5e0020cf821a7deccf700dc4a24553395f5f49815f9488fdaf99b1531771/detection)  
 It was created with Visual Studio 2019 Community edition. If you're copying the code instead of opening/modifying the original project then go add `_CRT_SECURE_NO_WARNINGS` line to `Project -> Properties (at the bottom) -> C/C++ -> Preprocessor -> Preprocessor Definitions -> <Edit>`. Otherwise it won't compile well (because of strcpy). I also recommend to change `Output directory` to your Gta installation folder. This way you don't have to copy any files after each compilation. It's in:  
 `Project -> Properties -> Configuration Properties -> General`
 
