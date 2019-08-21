@@ -1,0 +1,64 @@
+﻿  dllmain.cpp
+C:\Users\michal\source\repos\samp_commands\samp_commands\Structures.h(43,1): error C4996:  'strcpy': This function or variable may be unsafe. Consider using strcpy_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\string.h(133): message :  see declaration of 'strcpy'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(47,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(48,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(47,8): error C2065:  'push': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(47,13): error C2146:  syntax error: missing ';' before identifier 'edx'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(47,13): error C2065:  'edx': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(48,8): error C2146:  syntax error: missing ';' before identifier 'push'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(48,8): error C2065:  'push': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(48,13): error C2146:  syntax error: missing ';' before identifier 'ecx'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(48,13): error C2065:  'ecx': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(50,2): error C2143:  syntax error: missing ';' before 'for'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(62,53): warning C4311:  'type cast': pointer truncation from 'BYTE *' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(62,53): warning C4302:  'type cast': truncation from 'BYTE *' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(65,119): warning C4311:  'type cast': pointer truncation from 'CLEO_RunningScript *' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(65,119): warning C4302:  'type cast': truncation from 'CLEO_RunningScript *' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(68,52): warning C4312:  'type cast': conversion from 'DWORD' to 'BYTE *' of greater size
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(76,4): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(77,4): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(76,10): error C2065:  'pop': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(76,14): error C2146:  syntax error: missing ';' before identifier 'ecx'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(76,14): error C2065:  'ecx': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(77,10): error C2146:  syntax error: missing ';' before identifier 'pop'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(77,10): error C2065:  'pop': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(77,14): error C2146:  syntax error: missing ';' before identifier 'edx'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(77,14): error C2065:  'edx': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(78,4): error C2143:  syntax error: missing ';' before 'return'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(82,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(83,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(82,8): error C2065:  'pop': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(82,12): error C2146:  syntax error: missing ';' before identifier 'ecx'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(82,12): error C2065:  'ecx': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(83,8): error C2146:  syntax error: missing ';' before identifier 'pop'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(83,8): error C2065:  'pop': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(83,12): error C2146:  syntax error: missing ';' before identifier 'edx'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(83,12): error C2065:  'edx': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,8): error C2146:  syntax error: missing ';' before identifier 'mov'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,8): error C2065:  'mov': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,12): error C2146:  syntax error: missing ';' before identifier 'eax'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,12): error C2065:  'eax': undeclared identifier
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,22): error C2143:  syntax error: missing ']' before '+'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,22): error C3481:  'ebp': lambda capture variable not found
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(84,22): error C3260:  '+': skipping unexpected token(s) before lambda body
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(85,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(86,2): error C4235:  nonstandard extension used: '__asm' keyword not supported on this architecture
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(94,1): warning C4312:  'type cast': conversion from 'DWORD' to 'BYTE *' of greater size
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(97,1): warning C4311:  'type cast': pointer truncation from 'CLEO_RunningScript *' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(97,1): warning C4302:  'type cast': truncation from 'CLEO_RunningScript *' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(97,1): error C4996:  'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Program Files (x86)\Windows Kits\10\Include\10.0.17763.0\ucrt\stdio.h(1774): message :  see declaration of 'sprintf'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(107,1): error C2146:  syntax error: missing ';' before identifier 'BOOL'
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(111,1): error C2601:  'DllMain': local function definitions are illegal
+  Hook.cpp
+C:\Users\michal\source\repos\samp_commands\samp_commands\dllmain.cpp(123,1): error C1004:  unexpected end-of-file found
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(15,50): error C2664:  'HMODULE GetModuleHandleW(LPCWSTR)': cannot convert argument 1 from 'const char [9]' to 'LPCWSTR'
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(15,40): message :  Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or function-style cast
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(19,34): warning C4312:  'type cast': conversion from 'DWORD' to 'void *' of greater size
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(22,44): warning C4311:  'type cast': pointer truncation from 'int (__cdecl *)(const char *)' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(22,44): warning C4302:  'type cast': truncation from 'int (__cdecl *)(const char *)' to 'DWORD'
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(23,34): warning C4312:  'type cast': conversion from 'DWORD' to 'void *' of greater size
+  Generating Code...
+C:\Users\michal\source\repos\samp_commands\samp_commands\Hook.cpp(30,34): warning C4312:  'type cast': conversion from 'DWORD' to 'void *' of greater size
