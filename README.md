@@ -1,6 +1,6 @@
 # Prerequisites
-[Cleo library 4.1.1.30](https://cleo.li/cleo4/CLEO4.1_setup.exe) (Won't work with **4.3**, soon it will though.)  
-[Samp 0.3.7 R1](http://files.sa-mp.com/sa-mp-0.3.7-install.exe) (Won't work with **R2/R3/DL**)  
+[Cleo library 4.1.1.30](https://cleo.li/cleo4/CLEO4.1_setup.exe) (Won't work with **4.3**, soon it will)  
+[Samp 0.3.7 R1](http://files.sa-mp.com/sa-mp-0.3.7-install.exe) (Won't work with **R2/R3/DL**, soon it will)  
 Some experience with using Cleo in general.
 
 # Installation
