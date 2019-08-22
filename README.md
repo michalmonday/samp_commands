@@ -54,7 +54,7 @@ end
 ```
 
 # Considerations  
-In the current state it doesn't allow to register commands with the default forward slash.  
+In the current state it doesn't allow to register commands with the default forward slash. (will be fixed soon)  
 User is responsible for keeping track of command names to avoid registering the same command twice.  
 
 # Credits 
