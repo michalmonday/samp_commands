@@ -5,33 +5,78 @@
 #include "Functions.h"
 #include "Commands.h"
 #include "Exports.h" // contains functions that can be called from cleo mods to interact with this code/project
+#include "Compatibility.h"
+
 
 DWORD origChatInputHandler = NULL;
 DWORD origOpcodeHandler = NULL;
 
-// samp.dll + 0x6492A
-int __stdcall Hooked_HandleText(const char* typed_command) {
+wchar_t* GetInputText(DWORD inputPtr) {
+	return *(wchar_t **)(inputPtr + 0x4D);
+}
+
+char * Hooked_GetChatInputText(char* param_1, char* chatInput, DWORD maxSize) {
+	__asm pushfd // no idea why exactly but preserving the flags prevents the mouse cursor from not being disabled after processing input
+	static CInput * inputPtr = NULL;
+	__asm mov [inputPtr], esi
+
+	//char msg[200];
+	//sprintf(msg, "param_1 = 0x%X\nchat_input = %s\nmax_size = %d\nsomeObject = 0x%X", (DWORD)param_1, chatInput, maxSize, (DWORD)inputPtr);
+	//MessageBoxA(NULL, msg, "samp_commands.asi - Hooked_HandleText", MB_OK);
+
+	// modified behaviour
 	for (Command* cmd : Commands::vect) {
-		if (StartsWith(typed_command, cmd->registered_prefix)) {
-			Commands::SaveParams(typed_command, cmd->registered_prefix);
+		if (StartsWith(chatInput, cmd->registered_prefix)) {
+			Commands::SaveParams(chatInput, cmd->registered_prefix);
 			cmd->return_address = (DWORD)cmd->cleo->CurrentIP;
-			//char msg[200];
-			//sprintf(msg, "cmd->return_address = 0x%X\nCleo = 0x%X\nLabel address = 0x%X\norigChatInputHandler=0x%X", cmd->return_address, (DWORD)cmd->cleo, cmd->label_address, origChatInputHandler);
-			//MessageBoxA(NULL, msg, "Hooked_HandleText", MB_OK);
 			cmd->cleo->CurrentIP = (BYTE*)cmd->label_address;
 			Commands::last = cmd;
-			return 1;
+
+			stInputBox *pInputBox = (stInputBox *)inputPtr->m_pEditbox;
+
+			/*
+			wchar_t* wideStr = GetInputText(pInputBox);
+			char* str = WideStringToAscii(wideStr);
+		
+			// clear chat input text
+			memset(wideStr, 0, lstrlenW(wideStr) * 2);
+
+			// set cursor to the begining
+			*(BYTE*)(pInputBox + 0x11e) = 0;
+
+			// set marked text to the begining
+			*(BYTE*)(pInputBox + 0x119) = 0;
+			*/
+
+			// add recall (so when you open chat again and press up-arrow it will show your last typed command)
+			((void(__thiscall*)(CInput*, const char*))Compability::sampVersion->funcAddRecall)(inputPtr, chatInput);
+
+			((void(__thiscall*)(stInputBox*, const char*, bool))Compability::sampVersion->funcSetInputBoxText)(pInputBox, "", true);
+			__asm popfd
+			return 0;
 		}
 	}
+	
+	//static char trololo[129] = "trololo";
+	//return ((char *(*)(char*, char*, DWORD))origChatInputHandler)(param_1, trololo, maxSize);
 
-	__asm {
-		mov eax, [ebp + 8]
-		push eax
-		call [origChatInputHandler]
-	}
-
-	return 1;
+	__asm popfd
+	return ((char* (*)(char*, char*, DWORD))origChatInputHandler)(param_1, chatInput, maxSize);
 }
+
+/*
+DWORD origSendCommandToServer = NULL;
+int __stdcall SendCommandToServer(const char* szCmd)
+{
+	if (!strcmp(szCmd, "/a"))
+	{
+		MessageBox(NULL, "Yeah you typed my command!", "Hello!", MB_OK);
+		return 1; // return 1 here so we cancel the server call (to the original function).
+	}
+		
+	return ((int (__stdcall*)(const char *))origChatInputHandler)(szCmd);
+}
+*/
 
 void __stdcall SetCleoInstructionPointerToCmdReturn(CLEO_RunningScript* cleo_thread) {
 	if (Commands::last_requested_return && 
@@ -45,50 +90,20 @@ void __stdcall SetCleoInstructionPointerToCmdReturn(CLEO_RunningScript* cleo_thr
 	}
 }
 
-/*
-void __stdcall NotifyAboutCurrentOpcode(int opcode) {
-	char msg[100];
-	sprintf(msg, "opcode(eax) = 0x%X", opcode);
-	MessageBoxA(NULL, msg, "OrigBehaviour", MB_OK);
-}
-*/
+/* Original function from: https://github.com/cleolibrary/CLEO4/blob/master/source/CCustomOpcodeSystem.cpp
+OpcodeResult __fastcall customOpcodeHandler(CRunningScript* thread, int dummy, unsigned short opcode)
+{
+	last_custom_opcode = opcode;
+	last_script = thread;
+	return customOpcodeHandlers[opcode - 0x0A8C](thread);
+}*/
 
-//cleo.asi + 0x26fe
-__declspec(naked) void Hooked_HandleCCustomOpcodeSystemInvoker() {
-	static CLEO_RunningScript* cleo_thread;
-	static int opcode = NULL;
-
-	_asm {
-		check_if_EAX_is_0AB2:
-			// upon function entrance eax = opcode value (e.g. 0x0AB2), here we save it to static var
-			mov[opcode], eax
-
-			// opcodes below call NotifyAboutCurrentOpcode function
-			/*pushad
-			pushfd
-			push[opcode]
-			call[NotifyAboutCurrentOpcode]
-			popfd
-			popad*/
-
-			cmp eax, 0x0AB2
-			jnz original_behaviour // if opcode != 0AB2 then don't modify what happens after the call
-
-		modified_behaviour:
-			mov [cleo_thread], ecx // save cleo_thread for after the call (in case if it gets modified inside the original function
-			call [original_behaviour]
-			push [cleo_thread]
-			call [SetCleoInstructionPointerToCmdReturn]
-			ret
-
-		original_behaviour: // equivalent to : call dword ptr[eax * 4 + origOpcodeHandler] (but that added pointer of origOpcodeHandler instead of its' value
-			mov edx, 4
-			mul edx
-			mov edx, [origOpcodeHandler]
-			add eax, edx
-			call [eax]
-			ret
+int __fastcall Hooked_customOpcodeHandler(CLEO_RunningScript* cleo_thread, int dummy, unsigned short opcode) {
+	int return_value = ((int (__fastcall*)(CLEO_RunningScript*, int, unsigned short))origOpcodeHandler)(cleo_thread, 0, opcode); // call original function
+	if (opcode == 0x0AB2) {
+		SetCleoInstructionPointerToCmdReturn(cleo_thread);
 	}
+	return return_value;
 }
 
 

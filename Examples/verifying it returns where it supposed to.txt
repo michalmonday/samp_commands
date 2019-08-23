@@ -50,7 +50,6 @@ end
 
 
 
-
 :register_commands_from_label
 0A9F: 31@ = current_thread_pointer
 31@ += 16
@@ -93,7 +92,8 @@ then
         0AA7: call_function 30@ num_params 0 pop 0 _params_string_pointer 29@        
         0AA3: free_library 31@
                 
-        if 29@ <> 0
+        0A8D: 28@ = read_memory 29@ size 1 virtual_protect 1
+        if 28@ <> 0
         then
             0485:  return_true  
             0AB2: ret 1 29@

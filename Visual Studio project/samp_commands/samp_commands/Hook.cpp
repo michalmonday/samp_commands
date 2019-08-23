@@ -2,57 +2,60 @@
 #include "Hook.h"
 #include "Functions.h"
 #include "dllmain.h"
+#include "Compatibility.h"
 
-#include <map>
+//#include <map>
 
 // Credits: 0x688
 // http://ugbase.eu/index.php?threads/do-your-own-sa-mp-commands.18694/
-
-
-DWORD dwPatchLoc = NULL;
 
 //std::map<DWORD, DWORD> mpSavedOriginalAddresses; (no detaching implemented/needed, so it's not used)
 
 DWORD AttachRelative(DWORD dwPatchLoc, DWORD dwOurNewFunction);
 DWORD AttachAbsolute(DWORD dwPatchLoc, DWORD * dwOurNewFunction);
 
-bool Hook::SampHandleText(DWORD* originalAddr, DWORD newFunction) {
+/*
+bool Hook::Samp_SendCommandToServer(DWORD* originalAddr, DWORD newFunction) {
 	if (DWORD dwSAMP = (DWORD)GetModuleHandle("samp.dll")) {
-		*originalAddr = AttachRelative(1 + dwSAMP + 0x6492A, newFunction);
+		DWORD offset = 0x65DF8; //Compability::GetSampAddress_GetChatInputText();
+		*originalAddr = AttachRelative(1 + dwSAMP + offset, newFunction); // where samp + 0x81030 is called (and the chat input string is returned)
+		return true;
 	}
-	else {
-		MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Hook::SampHandleText", MB_OK);
-		return false;
-	}
-	return true;
 
+	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Hook::Samp_SendCommandToServer", MB_OK);
+	return false;
+}*/
+
+/*
+bool Hook::Samp_GetChatInputText(DWORD* originalAddr, DWORD newFunction) {
+	if (DWORD dwSAMP = (DWORD)GetModuleHandle("samp.dll")) {
+		//*originalAddr = AttachRelative(1 + dwSAMP + 0x6492A, newFunction);
+		//*originalAddr = AttachRelative(1 + dwSAMP + 0xB3F0A, newFunction); // where CInput->ProcessInput is called
+
+		DWORD addr = ;
+		*originalAddr =  // where samp + 0x81030 is called (and the chat input string is returned)
+		return true;
+	}
+	
+	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Hook::SampHandleText", MB_OK);
+	return false;
 }
+*/
 
-bool Hook::CleoCCustomOpcodeSystemInvoker(DWORD* originalAddr, DWORD newFunction) {
+bool Hook::Cleo_customOpcodeHandler(DWORD* originalAddr, DWORD newFunction) {
 	if (DWORD dwCleo = (DWORD)GetModuleHandle("cleo.asi")) {
-		/*  Change from:
-				ff 14 85 90 14 6d 50     call   DWORD PTR [eax*4+0x506d1490]
-			Into:
-				90 ff 15 AA AA AA AA     nop + call   DWORD PTR ds:0xAAAAAAAA
-			(where AAAAAAAA is address of Hooked_HandleCCustomOpcodeSystemInvoker)
-			The new function will check/monitor "0AB2 ret" and set instruction pointer afterwards*/
-
-		DWORD instructionBeforeAddress = 0x15FF90;
-		SetData((void*)(dwCleo + 0x26fe), &instructionBeforeAddress, 3);
-
-		static DWORD newFunction_staticCopy = newFunction; // must be static since ff15 reads address and then calls the function at value
-		*originalAddr = AttachAbsolute(3 + dwCleo + 0x26fe, &newFunction_staticCopy);
-
-
+		DWORD ptrToStoredHandlerPtr = NULL;
+		GetData((void*)(0x469FEB + 3), &ptrToStoredHandlerPtr, 4);	
+		ptrToStoredHandlerPtr += 0x1B * 4; // there's seems to be a whole table of opcode handlers (0x1B*4 points to the one used by cleo "CustomOpcodes", other offsets can be used to hook other opcodes too) 
+		*originalAddr = AttachAbsolute(ptrToStoredHandlerPtr, (DWORD*)newFunction);
+		return true;
 	}
-	else {
-		MessageBoxA(NULL, "GetModuleHandle('cleo.asi') failed.", "samp_commands.asi - Hook::CleoCCustomOpcodeSystemInvoker", MB_OK);
-		return false;
-	}
-	return true;
+	
+	MessageBoxA(NULL, "GetModuleHandle('cleo.asi') failed.", "samp_commands.asi - Hook::CleoCCustomOpcodeSystemInvoker", MB_OK);
+	return false;
 }
 
-DWORD AttachRelative(DWORD dwPatchLoc, DWORD dwOurNewFunction){	
+DWORD Hook::AttachRelative(DWORD dwPatchLoc, DWORD dwOurNewFunction){	
 	DWORD dwOriginalAddr = NULL;
 	GetData((void*)(dwPatchLoc), &dwOriginalAddr, 4);
 	dwOriginalAddr = dwOriginalAddr + (dwPatchLoc + 4);
@@ -68,7 +71,7 @@ DWORD AttachRelative(DWORD dwPatchLoc, DWORD dwOurNewFunction){
 	return dwOriginalAddr;
 }
 
-DWORD AttachAbsolute(DWORD dwPatchLoc, DWORD * dwOurNewFunction) {
+DWORD Hook::AttachAbsolute(DWORD dwPatchLoc, DWORD * dwOurNewFunction) {
 	DWORD dwOriginalAddr = NULL;
 	GetData((void*)(dwPatchLoc), &dwOriginalAddr, 4);
 	//mpSavedOriginalAddresses.emplace(std::make_pair(dwOurNewFunction, dwOriginalAddr));

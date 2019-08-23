@@ -1,9 +1,13 @@
 c:\users\michal\source\repos\samp_commands\samp_commands\release\samp_commands.pch
 c:\users\michal\source\repos\samp_commands\samp_commands\release\vc142.pdb
 c:\users\michal\source\repos\samp_commands\samp_commands\release\pch.obj
-c:\users\michal\source\repos\samp_commands\samp_commands\release\hook.obj
 c:\users\michal\source\repos\samp_commands\samp_commands\release\functions.obj
 c:\users\michal\source\repos\samp_commands\samp_commands\release\dllmain.obj
+c:\users\michal\source\repos\samp_commands\samp_commands\release\commands.obj
+c:\users\michal\source\repos\samp_commands\samp_commands\release\hook.obj
+c:\users\michal\source\repos\samp_commands\samp_commands\release\compatibility.obj
+c:\users\michal\desktop\gta - san andreas\samp_commands.asi
+c:\users\michal\desktop\gta - san andreas\samp_commands.pdb
 c:\users\michal\desktop\gta - san andreas\samp_commands.lib
 c:\users\michal\desktop\gta - san andreas\samp_commands.exp
 c:\users\michal\desktop\gta - san andreas\samp_commands.ipdb

@@ -9,19 +9,27 @@
 #include "dllmain.h"
 #include "Commands.h"
 #include "Hook.h"
+#include "Compatibility.h"
 #include <Windows.h>
 
 
+
 extern "C" __declspec(dllexport) void _stdcall RegisterCommand(char* prefix, DWORD label_address, CLEO_RunningScript* cleo_thread_pointer) {
+	if (!Compability::sampVersion)
+		Compability::Init();
 
 	if (!origChatInputHandler)
-		Hook::SampHandleText(&origChatInputHandler, (DWORD)Hooked_HandleText);
+		origChatInputHandler = Hook::AttachRelative(1 + Compability::sampVersion->hook_addrGetChatInputText, (DWORD)Hooked_GetChatInputText);
+		//Hook::Samp_GetChatInputText(&origChatInputHandler, (DWORD)Hooked_GetChatInputText);
 
 	if (!origOpcodeHandler)
-		Hook::CleoCCustomOpcodeSystemInvoker(&origOpcodeHandler, (DWORD)Hooked_HandleCCustomOpcodeSystemInvoker);
+		Hook::Cleo_customOpcodeHandler(&origOpcodeHandler, (DWORD)Hooked_customOpcodeHandler);
 
-	if (!Commands::last_params)
-		Commands::last_params = (char*)malloc(300); // https://san-andreas-multiplayer-samp.fandom.com/wiki/Limits
+
+
+	//if (!origSendCommandToServer)
+	//	Hook::Samp_SendCommandToServer(&origSendCommandToServer, (DWORD)SendCommandToServer);
+
 
 	//char msg[200];
 	//sprintf(msg, "prefix = %s\nlabel_address = %d\nbase address = %d\ndiff = %d", prefix, label_address, (DWORD)cleo_thread_pointer->BaseIP, (DWORD)cleo_thread_pointer->BaseIP - label_address);
@@ -56,8 +64,6 @@ end
 */
 
 extern "C" __declspec(dllexport) char* _stdcall GetLastCommandParams() {
-	if (!Commands::last_had_params) return 0;
-
 	return Commands::last_params;
 }
 

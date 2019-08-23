@@ -13,15 +13,18 @@ namespace Commands {
 
 
 	void Init() {
-		last_params = (char*)malloc(300);
+		last_params = (char*)calloc(1, 1000);
 	}
 
 	void SaveParams(const char* typed_command, const char* registered_prefix) {
 		last_had_params = false;
 		if (size_t params_length = GetParamsLength(typed_command, registered_prefix)) {
 			last_had_params = true;
-			last_params = (char*)realloc(last_params, params_length + 1);
+			//last_params = (char*)realloc(last_params, params_length + 1);
 			strcpy(last_params, typed_command + strlen(registered_prefix) + 1);
+		}
+		else {
+			*last_params = '\0';
 		}
 	}
 }

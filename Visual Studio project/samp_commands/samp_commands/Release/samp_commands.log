@@ -1,9 +1,8 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(438,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
-  Compatibility.cpp
-  Hook.cpp
+  Commands.cpp
      Creating library ..\..\..\..\Desktop\GTA - San Andreas\samp_commands.lib and object ..\..\..\..\Desktop\GTA - San Andreas\samp_commands.exp
   Generating code
-  5 of 69 functions ( 7.2%) were compiled, the rest were copied from previous compilation.
+  2 of 70 functions ( 2.9%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
