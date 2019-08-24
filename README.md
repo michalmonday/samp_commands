@@ -1,3 +1,7 @@
+# What is it
+It allows to register commands without Sampfuncs plugin, it also allows using custom command prefix (instead of the default forward slash).  
+
+
 # Prerequisites
 Cleo Library (works well with: [4.1.1.30](https://cleo.li/cleo4/CLEO4.1_setup.exe):heavy_check_mark: [4.3.22](https://cleo.li/cleo4/CLEO4_setup.exe):heavy_check_mark:)  
 Samp (works well with: [0.3.7 R1](http://files.sa-mp.com/sa-mp-0.3.7-install.exe):heavy_check_mark: [0.3.7 R2](http://files.sa-mp.com/sa-mp-0.3.7-R2-install.exe):heavy_check_mark: [0.3.7 R3 1](http://files.sa-mp.com/sa-mp-0.3.7-R3-1-install.exe):heavy_check_mark: [0.3.DL R1](http://files.sa-mp.com/sa-mp-0.3.DL-R1-install.exe):heavy_check_mark:)  
@@ -54,9 +58,7 @@ end
 > Note that there's no need to allocate memory to 0@, it points to 1000 bytes of allocated memory starting with input string (don't free it).  
 
 
-# Minimal working example
-Register commands without Sampfuncs plugin.  
-Make custom command prefix (instead of the default forward slash).   
+# Minimal working example  
 ```
 {$CLEO .cs}
 0000:
@@ -100,9 +102,6 @@ end
 {$INCLUDE includes/samp_commands_functions.txt}
 ```
 
-# Considerations  
-At the moment the user is responsible for keeping track of command names to avoid registering the same command twice.  
-
 
 # Credits/resources used
 Thanks to [0x688](http://ugbase.eu/index.php?members/0x688.2/) for [Do your own SA:MP command's tutorial](http://ugbase.eu/index.php?threads/do-your-own-sa-mp-commands.18694/), it's very seful.  
@@ -111,8 +110,8 @@ Thanks to [springfield](http://ugbase.eu/index.php?members/springfield.56/) for 
 
 
 # Additional info
-[Virus Total scan of samp_commands.asi](https://www.virustotal.com/gui/file/f0bfc58c48f5e50166bfb1b1107d386fd2bbba6ffc69cbf9a011646a0fdce3a6/detection)  
+[Virus Total scan of samp_commands.asi](https://www.virustotal.com/gui/file/b50a0ba3e6a5ee21d66f29068f2c56f8c446a71af7b44f1b637043846b090c4e/detection)  
 It was created with Visual Studio 2019 Community edition. If you're copying the code instead of opening/modifying the original project then go add `_CRT_SECURE_NO_WARNINGS` line to `Project -> Properties (at the bottom) -> C/C++ -> Preprocessor -> Preprocessor Definitions -> <Edit>`. Otherwise it won't compile well (because of strcpy). I also recommend to change `Output directory` to your Gta installation folder. This way you don't have to copy any files after each compilation. It's in:  
 `Project -> Properties -> Configuration Properties -> General`
 
-Also, in the `Configuration Poperties -> Advanced` you can set the `Target file extension` to `.asi` (which I did for this project). This way you don't have to bother with changing "dll" to "asi" after each compilation.
+Also, in the `Configuration Poperties -> Advanced` you can set the `Target file extension` to `.asi` (which I did for this project). This way you don't have to bother with changing "dll" to "asi" after each compilation.  
