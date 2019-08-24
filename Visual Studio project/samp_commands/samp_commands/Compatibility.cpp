@@ -21,7 +21,7 @@ SampVersion * GetSampVersion(DWORD dwSAMP) {
 	for (SampVersion& v : versions) {
 		GetData((BYTE*)(dwSAMP + v.IMAGE_FILE_HEADER_DateTime_offset), &signatureBuffer, 4);
 		if (signatureBuffer == v.expectedValue) {			
-			//MessageBoxA(NULL, v.name, "samp_commands.asi - Recognized samp version", MB_OK);
+			//MessageBoxA(NULL, v.name, "samp_commands.asi - Recognized samp version", MB_OK | MB_TOPMOST);
 			return &v;
 		}
 	}
@@ -36,11 +36,11 @@ void Compability::Init() {
 			sampVersion->funcSetInputBoxText += dwSAMP;
 			return;
 		}
-		MessageBoxA(NULL, "Samp version not recognized, probably crash incoming...", "samp_commands.asi - GetSampVersion", MB_OK);
+		MessageBoxA(NULL, "Samp version not recognized, probably crash incoming...", "samp_commands.asi - GetSampVersion", MB_OK | MB_TOPMOST);
 		return;
 	}
 
-	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Compability::Init", MB_OK);
+	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Compability::Init", MB_OK | MB_TOPMOST);
 }
 
 
@@ -55,7 +55,7 @@ void Compability::Init() {
 //		GetData((void*)(dwCleo + 0x26FE), &signature, 2);
 //
 //		if (signature == 0x14FF) {
-//			//MessageBoxA(NULL, "Cleo version = 4.1", "samp_commands.asi - GetCleoVersion()", MB_OK);
+//			//MessageBoxA(NULL, "Cleo version = 4.1", "samp_commands.asi - GetCleoVersion()", MB_OK | MB_TOPMOST);
 //			return CLEO_4_1;
 //		}
 //
@@ -64,16 +64,16 @@ void Compability::Init() {
 //		GetData((void*)(dwCleo + 0x2289E), &signature, 4);
 //
 //		if (signature == 0xC25DD1FF) {
-//			//MessageBoxA(NULL, "Cleo version = 4.3", "samp_commands.asi - GetCleoVersion()", MB_OK);
+//			//MessageBoxA(NULL, "Cleo version = 4.3", "samp_commands.asi - GetCleoVersion()", MB_OK | MB_TOPMOST);
 //			return CLEO_4_3;
 //		}
 //		
-//		MessageBoxA(NULL, "Cleo version couldn't be determined.", "samp_commands.asi - GetCleoVersion()", MB_OK);
+//		MessageBoxA(NULL, "Cleo version couldn't be determined.", "samp_commands.asi - GetCleoVersion()", MB_OK | MB_TOPMOST);
 //		return NULL;
 //
 //	}
 //	else {
-//		MessageBoxA(NULL, "GetModuleHandle('cleo.asi') failed.", "samp_commands.asi - GetCleoVersion()", MB_OK);
+//		MessageBoxA(NULL, "GetModuleHandle('cleo.asi') failed.", "samp_commands.asi - GetCleoVersion()", MB_OK | MB_TOPMOST);
 //		return NULL;
 //	}
 //}

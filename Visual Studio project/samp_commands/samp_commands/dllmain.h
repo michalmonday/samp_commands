@@ -104,6 +104,8 @@ public:
 #pragma pack(pop)
 
 
+
+
 //extern void Hooked_HandleText();
 
 extern char* Hooked_GetChatInputText(char* param_1, char* param_2, DWORD param_3);

@@ -26,21 +26,24 @@ extern "C" __declspec(dllexport) void _stdcall RegisterCommand(char* prefix, DWO
 		Hook::Cleo_customOpcodeHandler(&origOpcodeHandler, (DWORD)Hooked_customOpcodeHandler);
 
 
-
-	//if (!origSendCommandToServer)
-	//	Hook::Samp_SendCommandToServer(&origSendCommandToServer, (DWORD)SendCommandToServer);
-
-
 	//char msg[200];
 	//sprintf(msg, "prefix = %s\nlabel_address = %d\nbase address = %d\ndiff = %d", prefix, label_address, (DWORD)cleo_thread_pointer->BaseIP, (DWORD)cleo_thread_pointer->BaseIP - label_address);
-	//MessageBoxA(NULL, msg, "RegisterCommand", MB_OK);
+	//MessageBoxA(NULL, msg, "RegisterCommand", MB_OK | MB_TOPMOST);
 
-	Commands::vect.push_back(new Command(
-		prefix,
-		(DWORD)cleo_thread_pointer->BaseIP - label_address,
-		cleo_thread_pointer,
-		NULL
-	));
+	
+	if (!Commands::IsRegistered(prefix)) {
+		Commands::vect.push_back(new Command(
+			prefix,
+			(DWORD)cleo_thread_pointer->BaseIP - label_address,
+			cleo_thread_pointer,
+			NULL
+		));
+		return;
+	}
+
+	char msg[300];
+	sprintf(msg, "'%s' command prefix is already registered.\ncleo_that_already_registered_it->Name[8]: %s\ncleo_that_tries_to_register_it_now->Name[8]: %s", prefix, Commands::GetCleoNameWhoRegisteredFirst(), cleo_thread_pointer->Name);
+	MessageBox(NULL, msg, "samp_commands.asi - RegisterCommand", MB_OK | MB_TOPMOST);
 }
 /*
 :register_command

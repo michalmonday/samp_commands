@@ -8,7 +8,6 @@ struct Command {
 	char* registered_prefix;
 	DWORD label_address; // equivalent to: 0B34: samp register_client_command "str" @label_address
 	CLEO_RunningScript* cleo;
-
 	DWORD return_address;
 
 	Command(char* s, DWORD la, CLEO_RunningScript* c, DWORD ra) {
@@ -32,6 +31,8 @@ namespace Commands {
 	extern std::vector<Command*> vect;
 	extern void Init();
 	extern void SaveParams(const char* typed_command, const char* registered_prefix);
+	extern bool IsRegistered(const char* prefix);
+	extern char* GetCleoNameWhoRegisteredFirst();
 }
 
 

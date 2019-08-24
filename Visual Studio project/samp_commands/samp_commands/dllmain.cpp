@@ -7,7 +7,6 @@
 #include "Exports.h" // contains functions that can be called from cleo mods to interact with this code/project
 #include "Compatibility.h"
 
-
 DWORD origChatInputHandler = NULL;
 DWORD origOpcodeHandler = NULL;
 
@@ -22,7 +21,7 @@ char * Hooked_GetChatInputText(char* param_1, char* chatInput, DWORD maxSize) {
 
 	//char msg[200];
 	//sprintf(msg, "param_1 = 0x%X\nchat_input = %s\nmax_size = %d\nsomeObject = 0x%X", (DWORD)param_1, chatInput, maxSize, (DWORD)inputPtr);
-	//MessageBoxA(NULL, msg, "samp_commands.asi - Hooked_HandleText", MB_OK);
+	//MessageBoxA(NULL, msg, "samp_commands.asi - Hooked_HandleText", MB_OK | MB_TOPMOST);
 
 	// modified behaviour
 	for (Command* cmd : Commands::vect) {

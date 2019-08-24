@@ -1,7 +1,11 @@
 #include "pch.h"
 #include "Commands.h"
 
+#include <algorithm>    // std::find_if
+
 size_t GetParamsLength(const char* typed_command, const char* registered_prefix);
+
+
 
 namespace Commands {
 	char* last_params = nullptr;
@@ -25,6 +29,26 @@ namespace Commands {
 		else {
 			*last_params = '\0';
 		}
+	}
+
+	char cleo_name_if_registered[8];
+	bool IsRegistered(const char* prefix) {
+		auto result =  std::find_if(vect.begin(), vect.end(),
+			[&p = prefix](Command * c) -> bool {
+				return !strcmp(c->registered_prefix, p);			// lambda function
+			});
+
+		WORD index = result - vect.begin();
+		if (index < vect.size()) {
+			strncpy(cleo_name_if_registered, vect[index]->cleo->Name, 8);
+			return true;
+		}
+		*cleo_name_if_registered = '\0';
+		return false;
+	}
+
+	char* GetCleoNameWhoRegisteredFirst() {
+		return cleo_name_if_registered;
 	}
 }
 

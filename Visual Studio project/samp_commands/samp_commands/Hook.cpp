@@ -23,7 +23,7 @@ bool Hook::Cleo_customOpcodeHandler(DWORD* originalAddr, DWORD newFunction) {
 		return true;
 	}
 	
-	MessageBoxA(NULL, "GetModuleHandle('cleo.asi') failed.", "samp_commands.asi - Hook::CleoCCustomOpcodeSystemInvoker", MB_OK);
+	MessageBoxA(NULL, "GetModuleHandle('cleo.asi') failed.", "samp_commands.asi - Hook::CleoCCustomOpcodeSystemInvoker", MB_OK | MB_TOPMOST);
 	return false;
 }
 
@@ -38,7 +38,7 @@ DWORD Hook::AttachRelative(DWORD dwPatchLoc, DWORD dwOurNewFunction){
 
 	//char msg[200];
 	//sprintf(msg, "dwPatchLoc = 0x%X\ndwOurNewFunction = 0x%X\ndwOriginalAddr = 0x%X", dwPatchLoc, dwOurNewFunction, dwOriginalAddr);
-	//MessageBoxA(NULL, msg, "samp_commands.asi - AttachRelative", MB_OK);
+	//MessageBoxA(NULL, msg, "samp_commands.asi - AttachRelative", MB_OK | MB_TOPMOST);
 	
 	return dwOriginalAddr;
 }
@@ -52,7 +52,7 @@ DWORD Hook::AttachAbsolute(DWORD dwPatchLoc, DWORD * dwOurNewFunction) {
 
 	//char msg[100];
 	//sprintf(msg, "originalAddr = 0x%X\nnewFunction = 0x%X\n&newFunction = 0x%X", dwOriginalAddr, dwOurNewFunction, &dwOurNewFunction);
-	//MessageBoxA(NULL, msg, "samp_commands.asi - AttachAbsolute", MB_OK);
+	//MessageBoxA(NULL, msg, "samp_commands.asi - AttachAbsolute", MB_OK | MB_TOPMOST);
 	
 	return dwOriginalAddr;
 }
@@ -75,13 +75,13 @@ bool Hook::Detach(DWORD dwPatchLoc, DWORD dwOurNewFunction) {
 
 		char msg[200];
 		sprintf(msg, "dwOurNewFunction(0x%X) was not found in mpSavedOriginalAddresses", dwOurNewFunction);
-		MessageBoxA(NULL, msg, "Hook::Detach error", MB_OK);
+		MessageBoxA(NULL, msg, "Hook::Detach error", MB_OK | MB_TOPMOST);
 		return false;
 	}
 
 	char msg[200];
 	sprintf(msg, "currentAddressAtPatchLoc(0x%X) is not equal to dwOurNewFunction(0x%X)", dwCurrentAddressAtPatchLoc, dwOurNewFunction);
-	MessageBoxA(NULL, msg, "Hook::Detach error", MB_OK);
+	MessageBoxA(NULL, msg, "Hook::Detach error", MB_OK | MB_TOPMOST);
 	return false;
 }
 */
