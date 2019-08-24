@@ -64,20 +64,6 @@ char * Hooked_GetChatInputText(char* param_1, char* chatInput, DWORD maxSize) {
 	return ((char* (*)(char*, char*, DWORD))origChatInputHandler)(param_1, chatInput, maxSize);
 }
 
-/*
-DWORD origSendCommandToServer = NULL;
-int __stdcall SendCommandToServer(const char* szCmd)
-{
-	if (!strcmp(szCmd, "/a"))
-	{
-		MessageBox(NULL, "Yeah you typed my command!", "Hello!", MB_OK);
-		return 1; // return 1 here so we cancel the server call (to the original function).
-	}
-		
-	return ((int (__stdcall*)(const char *))origChatInputHandler)(szCmd);
-}
-*/
-
 void __stdcall SetCleoInstructionPointerToCmdReturn(CLEO_RunningScript* cleo_thread) {
 	if (Commands::last_requested_return && 
 		Commands::last && 

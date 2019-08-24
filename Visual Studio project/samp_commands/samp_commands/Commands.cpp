@@ -11,7 +11,6 @@ namespace Commands {
 
 	std::vector<Command*> vect;
 
-
 	void Init() {
 		last_params = (char*)calloc(1, 1000);
 	}

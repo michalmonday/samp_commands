@@ -30,7 +30,6 @@ wait 6000
 0AB2: ret 0
 
 
-
 :get_last_command_params
 if 0AA2: 31@ = load_library "samp_commands.asi"
 then
@@ -68,10 +67,6 @@ then
     0AA3: free_library 31@
 end
 0AB2: ret 0
-
-
-
-//GetLastCommandParams
 
 
 :register_command

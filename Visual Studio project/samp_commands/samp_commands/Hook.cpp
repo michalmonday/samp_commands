@@ -14,34 +14,6 @@
 DWORD AttachRelative(DWORD dwPatchLoc, DWORD dwOurNewFunction);
 DWORD AttachAbsolute(DWORD dwPatchLoc, DWORD * dwOurNewFunction);
 
-/*
-bool Hook::Samp_SendCommandToServer(DWORD* originalAddr, DWORD newFunction) {
-	if (DWORD dwSAMP = (DWORD)GetModuleHandle("samp.dll")) {
-		DWORD offset = 0x65DF8; //Compability::GetSampAddress_GetChatInputText();
-		*originalAddr = AttachRelative(1 + dwSAMP + offset, newFunction); // where samp + 0x81030 is called (and the chat input string is returned)
-		return true;
-	}
-
-	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Hook::Samp_SendCommandToServer", MB_OK);
-	return false;
-}*/
-
-/*
-bool Hook::Samp_GetChatInputText(DWORD* originalAddr, DWORD newFunction) {
-	if (DWORD dwSAMP = (DWORD)GetModuleHandle("samp.dll")) {
-		//*originalAddr = AttachRelative(1 + dwSAMP + 0x6492A, newFunction);
-		//*originalAddr = AttachRelative(1 + dwSAMP + 0xB3F0A, newFunction); // where CInput->ProcessInput is called
-
-		DWORD addr = ;
-		*originalAddr =  // where samp + 0x81030 is called (and the chat input string is returned)
-		return true;
-	}
-	
-	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Hook::SampHandleText", MB_OK);
-	return false;
-}
-*/
-
 bool Hook::Cleo_customOpcodeHandler(DWORD* originalAddr, DWORD newFunction) {
 	if (DWORD dwCleo = (DWORD)GetModuleHandle("cleo.asi")) {
 		DWORD ptrToStoredHandlerPtr = NULL;

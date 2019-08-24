@@ -48,8 +48,7 @@ if 0AA2: 31@ = load_library "samp_commands.asi"
 then
 	if 0AA4: 30@ = get_proc_address "_RegisterCommand@12" library 31@
 	then
-		0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~G~found ~W~:)" time 2000
-
+		//0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~G~found ~W~:)" time 2000
 		0A9F: 29@ = current_thread_pointer
 
 		// void _stdcall RegisterCommand(char * str, DWORD label_address, CLEO_RunningScript * cleo_thread_pointer)
@@ -57,7 +56,6 @@ then
 	else
 		0AD1: show_formatted_text_highpriority "_RegisterCommand@12 function was ~R~not found ~W~:(" time 5000
 	end
-
 	0AA3: free_library 31@
 end
 0AB2: ret 0
@@ -73,13 +71,12 @@ if 0AA2: 31@ = load_library "samp_commands.asi"
 then
 	if 0AA4: 30@ = get_proc_address "_GetLastCommandParams@0" library 31@
 	then
-		0AD1: show_formatted_text_highpriority "_GetLastCommandParams@0 function was ~G~found ~W~:)" time 2000
-
+		//0AD1: show_formatted_text_highpriority "_GetLastCommandParams@0 function was ~G~found ~W~:)" time 2000
 		0AA7: call_function 30@ num_params 0 pop 0 _params_string_pointer 29@
-
 		0AA3: free_library 31@
 
-		if 29@ <> 0
+		0A8D: 28@ = read_memory 29@ size 1 virtual_protect 1
+		if 28@ <> 0
 		then
 			0485:  return_true
 			0AB2: ret 1 29@
@@ -106,7 +103,7 @@ if 0AA2: 31@ = load_library "samp_commands.asi"
 then
 	if 0AA4: 30@ = get_proc_address "_CmdRet@0" library 31@
 	then
-		0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~G~found ~W~:)" time 2000
+		//0AD1: show_formatted_text_highpriority "_CmdRet@0 function was ~G~found ~W~:)" time 2000
 
 		0AA5: call 30@ num_params 0 pop 0
 	else

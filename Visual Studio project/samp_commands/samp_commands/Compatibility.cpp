@@ -21,7 +21,7 @@ SampVersion * GetSampVersion(DWORD dwSAMP) {
 	for (SampVersion& v : versions) {
 		GetData((BYTE*)(dwSAMP + v.IMAGE_FILE_HEADER_DateTime_offset), &signatureBuffer, 4);
 		if (signatureBuffer == v.expectedValue) {			
-			MessageBoxA(NULL, v.name, "samp_commands.asi - Recognized samp version", MB_OK);
+			//MessageBoxA(NULL, v.name, "samp_commands.asi - Recognized samp version", MB_OK);
 			return &v;
 		}
 	}
@@ -34,14 +34,13 @@ void Compability::Init() {
 			sampVersion->funcAddRecall += dwSAMP;
 			sampVersion->hook_addrGetChatInputText += dwSAMP;
 			sampVersion->funcSetInputBoxText += dwSAMP;
+			return;
 		}
-		else {
-			MessageBoxA(NULL, "Samp version not recognized, probably crash incoming...", "samp_commands.asi - GetSampVersion", MB_OK);
-		}
+		MessageBoxA(NULL, "Samp version not recognized, probably crash incoming...", "samp_commands.asi - GetSampVersion", MB_OK);
+		return;
 	}
-	else {
-		MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Compability::Init", MB_OK);
-	}
+
+	MessageBoxA(NULL, "GetModuleHandle('samp.dll') failed.", "samp_commands.asi - Compability::Init", MB_OK);
 }
 
 
