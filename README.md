@@ -1,4 +1,4 @@
-# What is it
+# What it does
 It allows to register commands without Sampfuncs plugin, it also allows using custom command prefix (instead of the default forward slash).  
 
 
@@ -9,9 +9,9 @@ Some experience with using Cleo in general.
 
 
 # Installation
-Put `samp_commands.asi` inside your Gta directory.  
+Put [samp_commands.asi](https://github.com/michalmonday/samp_commands/raw/master/samp_commands.asi) inside your Gta directory.  
 Create `includes` folder inside your Cleo directory.  
-Put the [samp_commands_functions.txt](https://github.com/michalmonday/samp_commands/blob/master/samp_commands_functions.txt) inside the `includes` folder.  
+Put the [samp_commands_functions.txt](https://github.com/michalmonday/samp_commands/raw/master/samp_commands_functions.txt) inside the `includes` folder.  
 
 
 # Implemented functions  
