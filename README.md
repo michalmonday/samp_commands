@@ -86,7 +86,7 @@ Thanks to [0x688](http://ugbase.eu/index.php?members/0x688.2/) for [Do your own 
 Thanks to [Luchare](https://github.com/LUCHARE/) for [SAMP-API](https://github.com/BlastHackNet/SAMP-API) and developers of [mod_s0beit_sa](https://github.com/BlastHackNet/mod_s0beit_sa-1)
 
 # Additional info
-[Virus Total scan of samp_commands.asi](https://www.virustotal.com/gui/file/cf2f5e0020cf821a7deccf700dc4a24553395f5f49815f9488fdaf99b1531771/detection)  
+[Virus Total scan of samp_commands.asi](https://www.virustotal.com/gui/file/f0bfc58c48f5e50166bfb1b1107d386fd2bbba6ffc69cbf9a011646a0fdce3a6/detection)  
 It was created with Visual Studio 2019 Community edition. If you're copying the code instead of opening/modifying the original project then go add `_CRT_SECURE_NO_WARNINGS` line to `Project -> Properties (at the bottom) -> C/C++ -> Preprocessor -> Preprocessor Definitions -> <Edit>`. Otherwise it won't compile well (because of strcpy). I also recommend to change `Output directory` to your Gta installation folder. This way you don't have to copy any files after each compilation. It's in:  
 `Project -> Properties -> Configuration Properties -> General`
 
