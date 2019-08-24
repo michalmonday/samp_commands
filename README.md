@@ -106,7 +106,8 @@ At the moment the user is responsible for keeping track of command names to avoi
 
 # Credits/resources used
 Thanks to [0x688](http://ugbase.eu/index.php?members/0x688.2/) for [Do your own SA:MP command's tutorial](http://ugbase.eu/index.php?threads/do-your-own-sa-mp-commands.18694/), it's very seful.  
-Thanks to [Luchare](https://github.com/LUCHARE/) for [SAMP-API](https://github.com/BlastHackNet/SAMP-API) and developers of [mod_s0beit_sa](https://github.com/BlastHackNet/mod_s0beit_sa-1)
+Thanks to [Luchare](https://github.com/LUCHARE/) for [SAMP-API](https://github.com/BlastHackNet/SAMP-API) and developers of [mod_s0beit_sa](https://github.com/BlastHackNet/mod_s0beit_sa-1)  
+Thanks to springfield for help with [SetText function](http://ugbase.eu/index.php?threads/set-or-clear-chat-input-text.20795/#post-121558) for input box.  
 
 
 # Additional info
