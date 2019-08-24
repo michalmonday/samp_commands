@@ -2,15 +2,11 @@
 0A9F: 31@ = current_thread_pointer
 31@ += 16
 0A8D: 31@ = read_memory 31@ size 4 virtual_protect 0        // this cleo base ptr
-//chatmsg "base ptr = 0x%X" -1 31@
 0062: 31@ -= 0@                                             // 31@ = cmd_store offset
-//chatmsg "cmd_store offset = 0x%X" -1 31@ 
-0A8D: 30@ = read_memory 0x8580DC size 4 virtual_protect 0   // 0x8580DC is an address where pointer to lstrlenA is stored
-
 28@ = 1
 while 28@ <> 0
     wait 0
-    0AA7: call_function 30@ num_params 1 pop 0 string 31@ _returned_length 29@ // 29@ = lstrlenA(command_prefix);
+    0AA7: call_function 0x826330 num_params 1 pop 1 string 31@ _returned_length 29@ // size_t __cdecl _strlen(char * _Str)
     
     if 29@ == 0
     then
@@ -86,24 +82,21 @@ then
 end
 0AB2: ret 0
 
-:is_samp_commands_loaded
-if 0AA2: 31@ = load_library "samp_commands.asi" // IF and SET
-then            
-    0485:  return_true
-    0AA3: free_library 31@
-    0AB2: ret 0
-end
-0AD1: show_formatted_text_highpriority "samp_commands.asi isn't loaded" time 1000
-059A:  return_false
-0AB2: ret 0
 
 :wait_till_game_and_samp_commands_loaded
-repeat 
+while true
 wait 0
-until 0AB1: call_scm_func @is_samp_commands_loaded 0
+    if 0AA2: 31@ = load_library "samp_commands.asi" // IF and SET
+    then            
+        0AA3: free_library 31@  
+        break
+    else 
+        0AD1: show_formatted_text_highpriority "samp_commands.asi isn't loaded" time 1000     
+    end
+end
 
 repeat
 wait 0
-0A8D: 31@ = readMem 0xA444A0 sz 4 vp 0
+    0A8D: 31@ = readMem 0xA444A0 sz 4 vp 0
 until 31@ == 1
 0AB2: ret 0
